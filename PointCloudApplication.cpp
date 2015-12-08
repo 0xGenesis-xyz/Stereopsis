@@ -134,9 +134,11 @@ void PointCloudApplication::clean_up() {
 void PointCloudApplication::draw_logo() {
     int h = context.viewport_height;
     int w = context.viewport_width;
-    double scale_factor = w == 320 ? 0.5 : 1.0;
+//    printf("width: %d", w);
+//    double scale_factor = w == 320 ? 0.5 : 1.0;
+    double scale_factor = (double)w/640;
     switch_to_ortho();
-    draw_image(logo_texture, 10, h-(140+54)*scale_factor, 262*scale_factor, 54*scale_factor, 0, 0, 1, 1);
+    draw_image(logo_texture, 10, h-(20+54)*scale_factor, 262*scale_factor, 54*scale_factor, 0, 0, 1, 1);
 }
 
 

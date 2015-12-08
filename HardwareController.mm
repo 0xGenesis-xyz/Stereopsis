@@ -200,7 +200,7 @@ machineName()
         }
         
         char* ba = (char*)CVPixelBufferGetBaseAddress(self.pixelBuffer);
-        pointcloudApplication->render_frame(ba, CVPixelBufferGetDataSize(self.pixelBuffer), timestamp);
+        pointcloudApplication->render_frame(ba, (int)CVPixelBufferGetDataSize(self.pixelBuffer), timestamp);
         
         CVPixelBufferUnlockBaseAddress (self.pixelBuffer, 0);
         return;

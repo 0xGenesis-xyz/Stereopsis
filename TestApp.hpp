@@ -18,21 +18,8 @@ private:
     float cuboid_vertices[19][3];
     float cuboid_normals[19][3];
     
-    enum ButtonType {
-        SLAM,
-        SLAM_FROM_IMAGE,
-        IMAGE,
-    };
-    
-    ButtonType selected_button;
-    
     void setup_cuboid();
     double init_fadeout_time;
-    void draw_ui();
-    
-    
-    // UI texture
-    GLuint ui_texture;
     
 protected:
     virtual void render_content(double time_since_last_frame);
