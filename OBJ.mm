@@ -165,9 +165,9 @@ float sqr(float k)
 -(void) drawObj
 {
     [texture UseTexture];
-    glVertexPointer(3, GL_FLOAT, 8*sizeof(GLfloat), buffer+vertex_off);
-    glNormalPointer(GL_FLOAT, 8*sizeof(GLfloat), buffer+normal_off);
-    glTexCoordPointer(2, GL_FLOAT, 8*sizeof(GLfloat), buffer+text_off);
+    glVertexPointer(3, GL_FLOAT, buffer_stride, buffer+vertex_off);
+    glNormalPointer(GL_FLOAT, buffer_stride, buffer+normal_off);
+    glTexCoordPointer(2, GL_FLOAT, buffer_stride, buffer+text_off);
     glDrawArrays(GL_TRIANGLES, 0, vertexNum);
 }
 

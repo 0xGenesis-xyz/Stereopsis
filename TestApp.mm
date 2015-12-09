@@ -94,9 +94,9 @@ void TestApp::setup_cuboid() {
             cuboid_normals[i][j] = normals[s][j];
         }
     }*/
-    NSString *objpath = [[NSBundle mainBundle] pathForResource:@"arcanegolem" ofType:@"obj"];
+    NSString *objpath = [[NSBundle mainBundle] pathForResource:@"arakkoa_sage" ofType:@"obj"];
     if(objpath == nil) NSLog(@"Path to obj not found");
-    NSString *textpath = [[NSBundle mainBundle] pathForResource:@"AG_Model_Mesh_ArcaneDefense" ofType:@"tga"];
+    NSString *textpath = [[NSBundle mainBundle] pathForResource:@"Arakkoa_Sage_WhiteHead" ofType:@"tga"];
     if(objpath == nil) NSLog(@"Path to texture image not found");
     objs[PRIEST] = [[OBJ alloc] init];
     [objs[PRIEST] loadObj:objpath Texture:textpath];
