@@ -43,6 +43,7 @@ PointCloudApplication(viewport_width, viewport_height,
 
 // Most convoluted way to make a cuboid
 void TestApp::setup_cuboid() {
+    /*
     float corners[8][3];
     float normals[6][3];
     
@@ -92,7 +93,14 @@ void TestApp::setup_cuboid() {
             cuboid_vertices[i][j] = corners[c][j];
             cuboid_normals[i][j] = normals[s][j];
         }
-    }
+    }*/
+    NSString *objpath = [[NSBundle mainBundle] pathForResource:@"arcanegolem" ofType:@"obj"];
+    if(objpath == nil) NSLog(@"Path to obj not found");
+    NSString *textpath = [[NSBundle mainBundle] pathForResource:@"AG_Model_Mesh_ArcaneDefense" ofType:@"tga"];
+    if(objpath == nil) NSLog(@"Path to texture image not found");
+    objs[PRIEST] = [[OBJ alloc] init];
+    [objs[PRIEST] loadObj:objpath Texture:textpath];
+    //[objs[PRIEST] setUp];
 }
 
 
@@ -106,26 +114,37 @@ void TestApp::render_content(double time_since_last_frame) {
         switch_to_camera();
         
         // Set light position
-        static const float light_position[4] = {1, 6, 0.5, 1.0f};
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
+        static const GLfloat LightWhite[] = {1,1,1,1};
+        static const float light_position[4] = {1, 1, 0.5, 0.0f};
         glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, LightWhite);
+        glLightfv(GL_LIGHT0, GL_AMBIENT, LightWhite);
+   //     glColor4f(1,0,0,1);
         
-        glColor4f(1,0,0,1);
-        
-        glDisable(GL_TEXTURE_2D);
+  //      glDisable(GL_TEXTURE_2D);
+        glEnable(GL_TEXTURE_2D);
+
         glEnable(GL_COLOR_MATERIAL);
         glShadeModel(GL_FLAT);
         
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
-        
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+/*
         glVertexPointer(3, GL_FLOAT, 0, (float *)cuboid_vertices);
         glNormalPointer(GL_FLOAT, 0, (float *)cuboid_normals);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 19);
+ */
+        [objs[PRIEST] drawObj];
         
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         glDisableClientState(GL_NORMAL_ARRAY);
         glDisableClientState(GL_VERTEX_ARRAY);
         
         glShadeModel(GL_SMOOTH);
+        glDisable(GL_TEXTURE_2D);
         glDisable(GL_COLOR_MATERIAL);
         glColor4f(1, 1, 1, 1);
     }

@@ -11,6 +11,7 @@
 
 #include "PointCloudApplication.hpp"
 #include "TextureUtilities.hpp"
+#import "OBJ.h"
 
 class TestApp : public PointCloudApplication {
     
@@ -20,6 +21,12 @@ private:
     
     void setup_cuboid();
     double init_fadeout_time;
+    
+    enum {
+        PRIEST,
+        OBJNUM
+    };
+    OBJ* objs[OBJNUM];
     
 protected:
     virtual void render_content(double time_since_last_frame);
