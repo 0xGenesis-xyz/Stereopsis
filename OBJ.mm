@@ -98,8 +98,8 @@ float sqr(float k)
     buffer_size = faces.count*3*buffer_stride;
     buffer = (GLfloat*)malloc(buffer_size);
     vertex_off = 0;
-    normal_off = sizeof(GLfloat)*3;
-    text_off = sizeof(GLfloat)*6;
+    normal_off = 3;
+    text_off = 6;
     vertexNum = [faces count]*3;
     NSLog(@"faces count = %ld",(long)[faces count]);
     NSLog(@"buffer_size = %ld",buffer_size);
@@ -139,7 +139,6 @@ float sqr(float k)
 
 -(void) setUp
 {
-  //  [texture UseTexture];
     glGenVertexArraysOES(1, &vertexArray);
     glBindVertexArrayOES(vertexArray);
     
@@ -147,7 +146,8 @@ float sqr(float k)
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, buffer_size, buffer, GL_STATIC_DRAW);
     
-/*    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    /*
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
     glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, buffer_stride, BUFFER_OFFSET(vertex_off));
 
     glEnableVertexAttribArray(GLKVertexAttribNormal);
@@ -155,18 +155,19 @@ float sqr(float k)
 
     glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
     glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, buffer_stride, BUFFER_OFFSET(text_off));
+
     glVertexPointer(3, GL_FLOAT, buffer_stride, BUFFER_OFFSET(vertex_off));
     glNormalPointer(GL_FLOAT, buffer_stride, BUFFER_OFFSET(normal_off));
     glTexCoordPointer(2, GL_FLOAT, buffer_stride, BUFFER_OFFSET(vertex_off));
- */
+  */
 }
 
 -(void) drawObj
 {
     [texture UseTexture];
-    glVertexPointer(3, GL_FLOAT, buffer_stride, buffer+vertex_off);
-    glNormalPointer(GL_FLOAT, buffer_stride, buffer+normal_off);
-    glTexCoordPointer(2, GL_FLOAT, buffer_stride, buffer+text_off);
+    glVertexPointer(3, GL_FLOAT, 8*sizeof(GLfloat), buffer+vertex_off);
+    glNormalPointer(GL_FLOAT, 8*sizeof(GLfloat), buffer+normal_off);
+    glTexCoordPointer(2, GL_FLOAT, 8*sizeof(GLfloat), buffer+text_off);
     glDrawArrays(GL_TRIANGLES, 0, vertexNum);
 }
 

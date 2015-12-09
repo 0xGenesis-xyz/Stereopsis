@@ -114,13 +114,13 @@ void TestApp::render_content(double time_since_last_frame) {
         switch_to_camera();
         
         // Set light position
-        glEnable(GL_LIGHTING);
-        glEnable(GL_LIGHT0);
-        static const GLfloat LightWhite[] = {1,1,1,1};
-        static const float light_position[4] = {1, 1, 0.5, 0.0f};
-        glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, LightWhite);
-        glLightfv(GL_LIGHT0, GL_AMBIENT, LightWhite);
+    //    glEnable(GL_LIGHTING);
+     //   glEnable(GL_LIGHT0);
+  //      static const GLfloat LightWhite[] = {1,1,1,1};
+    //    static const float light_position[4] = {1, 1, 0.5, 1.0f};
+    //    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+  //      glLightfv(GL_LIGHT0, GL_DIFFUSE, LightWhite);
+  //      glLightfv(GL_LIGHT0, GL_AMBIENT, LightWhite);
    //     glColor4f(1,0,0,1);
         
   //      glDisable(GL_TEXTURE_2D);
