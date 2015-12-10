@@ -49,7 +49,7 @@ void PaintPanel::setup_objs() {
     if(objpath == nil) NSLog(@"Path to texture image not found");
     objs[PRIEST] = [[OBJ alloc] init];
     [objs[PRIEST] loadObj:objpath Texture:textpath];
-    [objs[PRIEST] setUp];
+   // [objs[PRIEST] setUp];
 }
 
 
