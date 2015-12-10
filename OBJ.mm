@@ -41,6 +41,11 @@ float sqr(float k)
     return (self);
 }
 
+-(void)dealloc
+{
+    free(buffer);
+}
+
 -(void) loadObj:(NSString*)filename Texture:(NSString *)textfilename
 {
     NSMutableArray* textVertices = [[NSMutableArray alloc] init];
