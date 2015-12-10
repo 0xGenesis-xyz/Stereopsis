@@ -28,6 +28,8 @@ class PointCloudApplication;
     BOOL accelerometer_available;
     BOOL device_motion_available;
     double g_scale;
+    AVCaptureDevice *device;
+    CGFloat originalX,originalY;
 }
 
 - (void)startGraphics;
