@@ -9,7 +9,7 @@
 #import <AVFoundation/AVCaptureOutput.h>
 #import <CoreVideo/CVPixelBuffer.h>
 #import "HardwareController.h"
-#include "TestApp.hpp"
+#include "PaintPanel.hpp"
 #include <iostream>
 using namespace std;
 
@@ -343,7 +343,7 @@ machineName()
         NSString* documentsDirectory = [paths objectAtIndex:0]; // User-accesible file system path
         NSString *resourcePath = [NSString stringWithFormat:@"%@/", [[NSBundle mainBundle] resourcePath]];
         
-        pointcloudApplication = new TestApp(self.glView.bounds.size.width,
+        pointcloudApplication = new PaintPanel(self.glView.bounds.size.width,
                                             self.glView.bounds.size.height,
                                             w,
                                             h,

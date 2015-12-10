@@ -15,6 +15,11 @@
 @synthesize texWidth;
 @synthesize texHeight;
 
+-(void) dealloc
+{
+    free(texturedata);
+}
+
 CGContextRef CreateRGBABitmapContext (CGImageRef inImage)
 {
     CGContextRef context = NULL;

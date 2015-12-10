@@ -23,5 +23,6 @@
 
 -(int) LoadTextureFileName:(NSString*)filename TextureID:(GLuint) textureID;
 -(void) UseTexture;
+-(void) dealloc;
 
 @end

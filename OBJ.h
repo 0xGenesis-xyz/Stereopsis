@@ -24,5 +24,6 @@
 -(void) loadObj:(NSString*) filename Texture:(NSString*) textfilename;
 -(void) setUp;
 -(void) drawObj;
+-(void) dealloc;
 
 @end
