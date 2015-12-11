@@ -49,7 +49,7 @@ void PaintPanel::setup_objs() {
     if(objpath == nil) NSLog(@"Path to texture image not found");
     objs[PRIEST] = [[OBJ alloc] init];
     [objs[PRIEST] loadObj:objpath Texture:textpath];
-    [objs[PRIEST] setUp];
+   // [objs[PRIEST] setUp];
 }
 
 
@@ -65,11 +65,20 @@ void PaintPanel::render_content(double time_since_last_frame) {
         // Set light position
     //    glEnable(GL_LIGHTING);
      //   glEnable(GL_LIGHT0);
-  //      static const GLfloat LightWhite[] = {1,1,1,1};
-    //    static const float light_position[4] = {1, 1, 0.5, 1.0f};
-    //    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-  //      glLightfv(GL_LIGHT0, GL_DIFFUSE, LightWhite);
-  //      glLightfv(GL_LIGHT0, GL_AMBIENT, LightWhite);
+        static const GLfloat LightWhite[] = {1,1,1,1};
+        static const float LightPos[4] = {0, 1.2, 0,1.0f};
+        static const float Direction[3] = {0,-1,0};
+        glLightfv(GL_LIGHT1, GL_POSITION, LightPos);
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, LightWhite);
+        glLightfv(GL_LIGHT1, GL_SPECULAR, LightWhite);
+        glLightfv(GL_LIGHT1, GL_AMBIENT, LightWhite);
+        
+        glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, Direction);
+        glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 10);
+        glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0f);
+        glLightf(GL_LIGHT1,  GL_LINEAR_ATTENUATION, 0.03f);
+        glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION,0.03f);
+        glEnable(GL_LIGHT1);
    //     glColor4f(1,0,0,1);
         
   //      glDisable(GL_TEXTURE_2D);
@@ -95,7 +104,8 @@ void PaintPanel::render_content(double time_since_last_frame) {
         glShadeModel(GL_SMOOTH);
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_COLOR_MATERIAL);
-        glColor4f(1, 1, 1, 1);
+        glDisable(GL_LIGHT1);
+//        glColor4f(1, 1, 1, 1);
     }
 }
 

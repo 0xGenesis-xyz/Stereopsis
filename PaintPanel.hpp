@@ -29,7 +29,7 @@ protected:
     virtual void render_content(double time_since_last_frame);
     
 public:
-    
+
     PaintPanel(int viewport_width, int viewport_height,
             int video_width, int video_height,
             pointcloud_video_format video_format,

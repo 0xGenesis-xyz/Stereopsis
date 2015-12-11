@@ -113,6 +113,16 @@ using namespace std;
     CGPoint pt = [[touches anyObject] locationInView:self.glView];
     if (pointcloudApplication) {
         pointcloudApplication->on_touch_moved(pt.x, pt.y);
+        CGFloat zoom_factor = (pt.x-originalX)/1000.0;
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error]) {
+            CGFloat desiredZoomFactor = device.videoZoomFactor + zoom_factor;
+            // Check if desiredZoomFactor fits required range from 1.0 to activeFormat.videoMaxZoomFactor
+            device.videoZoomFactor = MAX(1.0, MIN(desiredZoomFactor, device.activeFormat.videoMaxZoomFactor));
+            [device unlockForConfiguration];
+        } else {
+            NSLog(@"error: %@", error);
+        }
     }
 }
 
@@ -127,6 +137,8 @@ using namespace std;
 {
     CGPoint pt = [[touches anyObject] locationInView:self.glView];
     if (pointcloudApplication) {
+        originalX = pt.x;
+        originalY = pt.y;
         pointcloudApplication->on_touch_started(pt.x, pt.y);
     }
 }
@@ -217,7 +229,7 @@ machineName()
     
     NSArray *arr = [AVCaptureDevice devices];
     
-    AVCaptureDevice *device = nil;
+    device = nil;
     NSError *outError = nil;
     
     for(int i=0; i<[arr count] && device == nil; i++) {
