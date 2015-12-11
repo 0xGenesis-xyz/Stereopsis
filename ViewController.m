@@ -16,6 +16,13 @@
 
 @implementation ViewController
 
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([segue.identifier isEqualToString:@"showModel"]) {
+//        HardwareController *hardwareController = (HardwareController *)segue.destinationViewController;
+//        hardwareController.selectedModel = self.selectedModel;
+//    }
+//}
+
 #pragma mark - UIPickerViewDelegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
