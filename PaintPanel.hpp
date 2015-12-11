@@ -12,6 +12,7 @@
 #include "PointCloudApplication.hpp"
 #include "TextureUtilities.hpp"
 #import "OBJ.h"
+//#inlude <math.h>
 
 class PaintPanel : public PointCloudApplication {
     
@@ -24,7 +25,7 @@ private:
         OBJNUM
     };
     OBJ* objs[OBJNUM];
-    
+    GLfloat floatTime = 0;
 protected:
     virtual void render_content(double time_since_last_frame);
     
