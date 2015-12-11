@@ -60,13 +60,19 @@
     UIImage *image1 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_1" ofType:@"jpg"]];
     UIImage *image2 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_2" ofType:@"jpg"]];
     UIImage *image3 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
+    UIImage *image4 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
+    UIImage *image5 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:image1];
     UIImageView *imageView2 = [[UIImageView alloc] initWithImage:image2];
     UIImageView *imageView3 = [[UIImageView alloc] initWithImage:image3];
+    UIImageView *imageView4 = [[UIImageView alloc] initWithImage:image3];
+    UIImageView *imageView5 = [[UIImageView alloc] initWithImage:image3];
     imageView1.contentMode = UIViewContentModeScaleAspectFit;
     imageView2.contentMode = UIViewContentModeScaleAspectFit;
     imageView3.contentMode = UIViewContentModeScaleAspectFit;
-    self.imageArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, nil];
+    imageView4.contentMode = UIViewContentModeScaleAspectFit;
+    imageView5.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, imageView5, nil];
 }
 
 - (void)viewWillLayoutSubviews {

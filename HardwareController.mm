@@ -381,7 +381,8 @@ machineName()
                                             [resourcePath cStringUsingEncoding:[NSString defaultCStringEncoding]],
                                             [documentsDirectory cStringUsingEncoding:[NSString defaultCStringEncoding]],
                                             machineName(),
-                                            g_scale);
+                                            g_scale,
+                                            self.selectedModel);
     }
     
     self.pixelBuffer = pixBuff;

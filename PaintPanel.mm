@@ -16,14 +16,15 @@ PaintPanel::PaintPanel(int viewport_width, int viewport_height,
                  const char* resource_path,
                  const char* documents_path,
                  const char* device,
-                 double ui_scale_factor) :
+                 double ui_scale_factor,
+                       int selectedModel) :
 PointCloudApplication(viewport_width, viewport_height,
                       video_width, video_height,
                       video_format,
                       resource_path,
                       documents_path,
                       device,
-                      ui_scale_factor)
+                      ui_scale_factor),selectedModel(selectedModel)
 {
     setup_objs();
     
@@ -43,12 +44,30 @@ PointCloudApplication(viewport_width, viewport_height,
 
 // Most convoluted way to make a cuboid
 void PaintPanel::setup_objs() {
-    NSString *objpath = [[NSBundle mainBundle] pathForResource:@"arakkoa_sage" ofType:@"obj"];
-    if(objpath == nil) NSLog(@"Path to obj not found");
-    NSString *textpath = [[NSBundle mainBundle] pathForResource:@"Arakkoa_Sage_WhiteHead" ofType:@"tga"];
-    if(objpath == nil) NSLog(@"Path to texture image not found");
-    objs[PRIEST] = [[OBJ alloc] init];
-    [objs[PRIEST] loadObj:objpath Texture:textpath];
+    NSString* objnames[OBJNum] = {
+        @"priest",
+        @"robot1",
+        @"robot2",
+        @"ghost",
+        @"bird"
+    };
+    NSString* textnames[OBJNum] = {
+        @"priest",
+        @"robot1",
+        @"robot2",
+        @"ghost",
+        @"bird"
+    };
+    NSString *objpath;
+    for (int i=0; i<OBJNum; i++) {
+        
+        objpath = [[NSBundle mainBundle] pathForResource:objnames[i] ofType:@"obj"];
+        if(objpath == nil) NSLog(@"Path to obj not found");
+        NSString *textpath = [[NSBundle mainBundle] pathForResource:textnames[i] ofType:@"tga"];
+        if(objpath == nil) NSLog(@"Path to texture image not found");
+        objs[i] = [[OBJ alloc] init];
+        [objs[i] loadObj:objpath Texture:textpath];
+    }
    // [objs[PRIEST] setUp];
 }
 
@@ -101,8 +120,8 @@ void PaintPanel::render_content(double time_since_last_frame) {
         floatTime += 0.5;
         if(floatTime == 60) floatTime = 0;
         glTranslatef(0, 0.15+0.1*cos(M_PI/30.0*floatTime), 0);
-        [objs[PRIEST] drawObj];
-        
+        objs[selectedModel].drawObj;
+        printf("selected Model = %d\n",selectedModel);
         glPopMatrix();
         
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
