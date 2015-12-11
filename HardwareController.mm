@@ -9,6 +9,7 @@
 #import <AVFoundation/AVCaptureOutput.h>
 #import <CoreVideo/CVPixelBuffer.h>
 #import "HardwareController.h"
+#import "PointCloud.h"
 #include "PaintPanel.hpp"
 #include <iostream>
 using namespace std;
@@ -130,6 +131,23 @@ using namespace std;
     CGPoint pt = [[touches anyObject] locationInView:self.glView];
     if (pointcloudApplication) {
         pointcloudApplication->on_touch_ended(pt.x, pt.y);
+        pointcloud_context context = pointcloud_get_context();
+        int w = context.viewport_width;
+        int h = context.viewport_height;
+        if (pt.y < 112 && pt.x < w/3 )
+        {
+            [[UIApplication sharedApplication].keyWindow.rootViewController
+                presentViewController:[[ViewController alloc] init]
+                            animated:YES
+                          completion:nil];
+            ViewController* view = [[self storyboard] instantiateInitialViewController];
+            [self presentViewController:view animated:YES
+                             completion:^{
+                            /*     [self dismissViewControllerAnimated:NO
+                                                          completion:nil];*/
+
+                             }];
+        }
     }
 }
 

@@ -21,7 +21,7 @@
                                 <rect key="frame" x="277" y="285" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="fY4-mQ-WDZ" kind="show" id="IGi-Q4-m5u"/>
+                                    <segue destination="fY4-mQ-WDZ" kind="presentation" id="kjv-2x-QUY"/>
                                 </connections>
                             </button>
                         </subviews>

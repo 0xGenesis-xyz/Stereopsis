@@ -43,9 +43,9 @@ PointCloudApplication(viewport_width, viewport_height,
 
 // Most convoluted way to make a cuboid
 void PaintPanel::setup_objs() {
-    NSString *objpath = [[NSBundle mainBundle] pathForResource:@"arcanegolem" ofType:@"obj"];
+    NSString *objpath = [[NSBundle mainBundle] pathForResource:@"arakkoa_sage" ofType:@"obj"];
     if(objpath == nil) NSLog(@"Path to obj not found");
-    NSString *textpath = [[NSBundle mainBundle] pathForResource:@"AG_Model_Mesh_ArcaneDefense" ofType:@"tga"];
+    NSString *textpath = [[NSBundle mainBundle] pathForResource:@"Arakkoa_Sage_WhiteHead" ofType:@"tga"];
     if(objpath == nil) NSLog(@"Path to texture image not found");
     objs[PRIEST] = [[OBJ alloc] init];
     [objs[PRIEST] loadObj:objpath Texture:textpath];
@@ -66,7 +66,7 @@ void PaintPanel::render_content(double time_since_last_frame) {
     //    glEnable(GL_LIGHTING);
      //   glEnable(GL_LIGHT0);
         static const GLfloat LightWhite[] = {1,1,1,1};
-        static const float LightPos[4] = {0, 1.2, 0,1.0f};
+        static const float LightPos[4] = {0, 1.3, 0,1.0f};
         static const float Direction[3] = {0,-1,0};
         glLightfv(GL_LIGHT1, GL_POSITION, LightPos);
         glLightfv(GL_LIGHT1, GL_DIFFUSE, LightWhite);
@@ -85,7 +85,7 @@ void PaintPanel::render_content(double time_since_last_frame) {
         glEnable(GL_TEXTURE_2D);
 
         glEnable(GL_COLOR_MATERIAL);
-        glShadeModel(GL_FLAT);
+        glShadeModel(GL_SMOOTH);
         
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
@@ -95,7 +95,15 @@ void PaintPanel::render_content(double time_since_last_frame) {
         glNormalPointer(GL_FLOAT, 0, (float *)cuboid_normals);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 19);
  */
+        
+        glPushMatrix();
+        
+        floatTime += 0.5;
+        if(floatTime == 60) floatTime = 0;
+        glTranslatef(0, 0.15+0.1*cos(M_PI/30.0*floatTime), 0);
         [objs[PRIEST] drawObj];
+        
+        glPopMatrix();
         
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         glDisableClientState(GL_NORMAL_ARRAY);
@@ -104,7 +112,7 @@ void PaintPanel::render_content(double time_since_last_frame) {
         glShadeModel(GL_SMOOTH);
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_COLOR_MATERIAL);
-        glDisable(GL_LIGHT1);
+    //    glDisable(GL_LIGHT1);
 //        glColor4f(1, 1, 1, 1);
     }
 }

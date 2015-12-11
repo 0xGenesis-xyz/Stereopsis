@@ -309,8 +309,8 @@ void PointCloudApplication::switch_to_camera() {
  */
 void PointCloudApplication::init_lighting() {
     float light_ambient[4] = {0.2f, 0.2f, 0.2f, 1.0f};
-    float light_diffuse[4] = {0.4f, 0.4f, 0.4f, 1.0f};
-    float light_specular[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float light_diffuse[4] = {0.2f, 0.2f, 0.2f, 1.0f};
+    float light_specular[4] = {0.0f, 0.0f, 0.0f, 0.0f};
     
     // Assign created components to GL_LIGHT0
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);

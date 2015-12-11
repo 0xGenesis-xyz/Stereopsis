@@ -12,6 +12,7 @@
 #import <CoreMedia/CoreMedia.h>
 #import <CoreMotion/CoreMotion.h>
 #import "GLView.h"
+#import "ViewController.h"
 
 class PointCloudApplication;
 
