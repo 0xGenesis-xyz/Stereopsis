@@ -36,7 +36,8 @@
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return self.view.frame.size.height/2;
+    UIImageView *view = [self.imageArray objectAtIndex:self.selectedModel];
+    return view.frame.size.height;
 }
 
 //- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
@@ -50,7 +51,7 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 2;
+    return [self.imageArray count];
 }
 
 #pragma mark - Initialization
@@ -58,14 +59,27 @@
 - (void)setupImageArray {
     UIImage *image1 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_1" ofType:@"jpg"]];
     UIImage *image2 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_2" ofType:@"jpg"]];
+    UIImage *image3 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
     UIImageView *imageView1 = [[UIImageView alloc] initWithImage:image1];
     UIImageView *imageView2 = [[UIImageView alloc] initWithImage:image2];
-    self.imageArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, nil];
+    UIImageView *imageView3 = [[UIImageView alloc] initWithImage:image3];
+    imageView1.contentMode = UIViewContentModeScaleAspectFit;
+    imageView2.contentMode = UIViewContentModeScaleAspectFit;
+    imageView3.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, nil];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    // geometry
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+//    UIImage *backgroudImage = [UIImage imageNamed:@"back"];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:backgroudImage];
+    
     [self setupImageArray];
     self.selectedModel = 0;
 }
