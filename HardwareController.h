@@ -67,5 +67,6 @@ class PointCloudApplication;
 @property (nonatomic) BOOL accelerometer_available;
 @property (nonatomic) BOOL device_motion_available;
 @property (nonatomic) PointCloudApplication* pointcloudApplication;
+@property (assign, nonatomic) NSInteger selectedModel;
 
 @end

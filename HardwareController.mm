@@ -61,6 +61,7 @@ using namespace std;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"select: %ld", (long)self.selectedModel);
     
     self.restartingCamera = NO;
     self.accelerometer_available = NO;

@@ -24,7 +24,7 @@
                                 <rect key="frame" x="20" y="20" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="bet-P0-sCK" kind="show" id="gqE-Bm-hN1"/>
+                                    <segue destination="bet-P0-sCK" kind="show" identifier="showModel" id="gqE-Bm-hN1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bb-7y-cH0">
