@@ -11,8 +11,10 @@
 
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-@property (strong, nonatomic) NSArray *imageArray;
+@property (strong, nonatomic) NSArray *imageViewArray;
 @property (assign, nonatomic) NSInteger selectedModel;
+@property (assign, nonatomic) CGFloat deviceFrame;
+@property (assign, nonatomic) CGRect viewSize;
 @end
 
 @implementation ViewController
@@ -31,13 +33,13 @@
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    UIImageView *imageView = [self.imageArray objectAtIndex:row];
+    UIImageView *imageView = [self.imageViewArray objectAtIndex:row];
     return [[UIImageView alloc] initWithImage:[imageView image]];
+//    return [self.imageViewArray objectAtIndex:row];
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    UIImageView *view = [self.imageArray objectAtIndex:self.selectedModel];
-    return view.frame.size.height;
+    return self.deviceFrame*0.8;
 }
 
 //- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
@@ -51,33 +53,69 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [self.imageArray count];
+    return [self.imageViewArray count];
 }
 
 #pragma mark - Initialization
 
+- (UIImage *)scaleImage:(UIImage *)image {
+    float scaleSize = self.deviceFrame*0.8/MIN(image.size.width, image.size.height);
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize, image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width*scaleSize, image.size.height*scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+- (NSArray *)loadGIF:(NSString *)fileName picNum:(int)num {
+    NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:num];
+    for (int i = 1; i<=num; i++) {
+        NSString *path = [NSString stringWithFormat:@"%@%d", fileName, i];
+        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:path ofType:@"png"]];
+        assert(image);
+        [imageArray addObject:[self scaleImage:image]];
+    }
+    return imageArray;
+}
+
 - (void)setupImageArray {
-    UIImage *image1 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_1" ofType:@"jpg"]];
-    UIImage *image2 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_2" ofType:@"jpg"]];
-    UIImage *image3 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
-    UIImage *image4 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
-    UIImage *image5 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
-    UIImageView *imageView1 = [[UIImageView alloc] initWithImage:image1];
-    UIImageView *imageView2 = [[UIImageView alloc] initWithImage:image2];
-    UIImageView *imageView3 = [[UIImageView alloc] initWithImage:image3];
-    UIImageView *imageView4 = [[UIImageView alloc] initWithImage:image3];
-    UIImageView *imageView5 = [[UIImageView alloc] initWithImage:image3];
-    imageView1.contentMode = UIViewContentModeScaleAspectFit;
-    imageView2.contentMode = UIViewContentModeScaleAspectFit;
-    imageView3.contentMode = UIViewContentModeScaleAspectFit;
-    imageView4.contentMode = UIViewContentModeScaleAspectFit;
-    imageView5.contentMode = UIViewContentModeScaleAspectFit;
-    self.imageArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, imageView5, nil];
+    UIImageView *imageView1 = [[UIImageView alloc] init];
+    UIImageView *imageView2 = [[UIImageView alloc] init];
+    UIImageView *imageView3 = [[UIImageView alloc] init];
+    UIImageView *imageView4 = [[UIImageView alloc] init];
+    UIImageView *imageView5 = [[UIImageView alloc] init];
+    
+    NSArray *imageArray = [NSArray array];
+    imageArray = [self loadGIF:@"bird" picNum:16];
+    [imageView1 setAnimationImages:imageArray];
+    [imageView1 setContentMode:UIViewContentModeScaleAspectFill];
+    [imageView1 setAnimationDuration:1.0];
+    [imageView1 startAnimating];
+    imageArray = [self loadGIF:@"bird" picNum:16];
+    [imageView2 setAnimationImages:imageArray];
+    [imageView2 setContentMode:UIViewContentModeScaleAspectFill];
+    [imageView2 setAnimationDuration:3.0];
+    [imageView2 startAnimating];
+    imageArray = [self loadGIF:@"bird" picNum:16];
+    [imageView3 setAnimationImages:imageArray];
+    [imageView3 setContentMode:UIViewContentModeScaleAspectFill];
+    [imageView3 setAnimationDuration:1.0];
+    [imageView3 startAnimating];
+    imageArray = [self loadGIF:@"bird" picNum:16];
+    [imageView4 setAnimationImages:imageArray];
+    [imageView4 setContentMode:UIViewContentModeScaleAspectFill];
+    [imageView4 setAnimationDuration:1.0];
+    [imageView4 startAnimating];
+    imageArray = [self loadGIF:@"bird" picNum:16];
+    imageView5.image = [imageArray objectAtIndex:1];
+    
+    self.imageViewArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, imageView5, nil];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     // geometry
+    NSLog(@"layout: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
 }
 
 - (void)viewDidLoad {
@@ -85,7 +123,9 @@
     // Do any additional setup after loading the view, typically from a nib.
 //    UIImage *backgroudImage = [UIImage imageNamed:@"back"];
 //    self.view.backgroundColor = [UIColor colorWithPatternImage:backgroudImage];
-    
+    NSLog(@"load: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
+    self.deviceFrame = MIN(self.view.frame.size.width, self.view.frame.size.height);
+    self.viewSize = CGRectMake(0, 0, self.deviceFrame*0.8, self.deviceFrame*0.8);
     [self setupImageArray];
     self.selectedModel = 0;
 }
