@@ -7,26 +7,27 @@
 //
 
 #import "ViewController.h"
+#import "HardwareController.h"
 
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSArray *imageArray;
-@property (assign, nonatomic) NSInteger selectedIndex;
+@property (assign, nonatomic) NSInteger selectedModel;
 @end
 
 @implementation ViewController
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"showModel"]) {
-//        HardwareController *hardwareController = (HardwareController *)segue.destinationViewController;
-//        hardwareController.selectedModel = self.selectedModel;
-//    }
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showModel"]) {
+        HardwareController *hardwareController = (HardwareController *)segue.destinationViewController;
+        hardwareController.selectedModel = self.selectedModel;
+    }
+}
 
 #pragma mark - UIPickerViewDelegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.selectedIndex = row;
+    self.selectedModel = row;
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
@@ -66,7 +67,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self setupImageArray];
-    self.selectedIndex = 0;
+    self.selectedModel = 0;
 }
 
 - (void)didReceiveMemoryWarning {
