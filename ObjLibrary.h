@@ -9,13 +9,21 @@
 #ifndef ObjLibrary_h
 #define ObjLibrary_h
 
-enum {
-    PRIEST,
-    ROBOT1,
-    ROBOT2,
-    GHOST,
-    BIRD,
-    OBJNum
+class ObjLibrary {
+public:
+    enum {
+        SKULL,
+        PRIEST,
+        ROBOT1,
+        ROBOT2,
+        GHOST,
+        BIRD,
+        OBJNum
+    };
+
+    static NSString* objnames[OBJNum];
+
+    static NSString* textnames[OBJNum];
 };
 
 #endif /* ObjLibrary_h */

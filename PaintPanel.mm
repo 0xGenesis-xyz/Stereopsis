@@ -44,26 +44,12 @@ PointCloudApplication(viewport_width, viewport_height,
 
 // Most convoluted way to make a cuboid
 void PaintPanel::setup_objs() {
-    NSString* objnames[OBJNum] = {
-        @"priest",
-        @"robot1",
-        @"robot2",
-        @"ghost",
-        @"bird"
-    };
-    NSString* textnames[OBJNum] = {
-        @"priest",
-        @"robot1",
-        @"robot2",
-        @"ghost",
-        @"bird"
-    };
     NSString *objpath;
-    for (int i=0; i<OBJNum; i++) {
+    for (int i=0; i<ObjLibrary::OBJNum; i++) {
         
-        objpath = [[NSBundle mainBundle] pathForResource:objnames[i] ofType:@"obj"];
+        objpath = [[NSBundle mainBundle] pathForResource:ObjLibrary::objnames[i] ofType:@"obj"];
         if(objpath == nil) NSLog(@"Path to obj not found");
-        NSString *textpath = [[NSBundle mainBundle] pathForResource:textnames[i] ofType:@"tga"];
+        NSString *textpath = [[NSBundle mainBundle] pathForResource:ObjLibrary::textnames[i] ofType:@"tga"];
         if(objpath == nil) NSLog(@"Path to texture image not found");
         objs[i] = [[OBJ alloc] init];
         [objs[i] loadObj:objpath Texture:textpath];

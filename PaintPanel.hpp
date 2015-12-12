@@ -20,7 +20,7 @@ class PaintPanel : public PointCloudApplication {
 private:
     void setup_objs();
     double init_fadeout_time;
-    OBJ* objs[OBJNum];
+    OBJ* objs[ObjLibrary::OBJNum];
     GLfloat floatTime = 0;
     int selectedModel;
 protected:
