@@ -175,7 +175,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     NSLog(@"load: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
     self.deviceFrame = self.view.frame.size;
-    UIImage *backgroudImage = [UIImage imageNamed:@"back.jpg"];
+    UIImage *backgroudImage = [UIImage imageNamed:@"back.png"];
     CGFloat scale = MAX(self.deviceFrame.width/backgroudImage.size.width, self.deviceFrame.height/backgroudImage.size.height);
     self.view.backgroundColor = [UIColor colorWithPatternImage:[self clipImage:[self scaleImage:backgroudImage withScale:scale] frame:self.deviceFrame]];
     [self setupImageArray];
