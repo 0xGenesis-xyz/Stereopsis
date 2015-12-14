@@ -9,18 +9,18 @@
 #import "CopyrightViewController.h"
 
 @interface CopyrightViewController ()
-
 @end
 
 @implementation CopyrightViewController
 
 - (IBAction)done {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {

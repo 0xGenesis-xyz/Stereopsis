@@ -9,10 +9,15 @@
 #import "ViewController.h"
 #import "HardwareController.h"
 
+#define RATIO 2
+
 @interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-@property (strong, nonatomic) NSArray *imageArray;
+@property (strong, nonatomic) NSArray *imageViewArray;
 @property (assign, nonatomic) NSInteger selectedModel;
+//@property (strong, nonatomic) CADisplayLink *displayLink;
+//@property (assign, nonatomic) NSInteger counter;
+@property (assign, nonatomic) CGSize deviceFrame;
 @end
 
 @implementation ViewController
@@ -31,18 +36,18 @@
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    UIImageView *imageView = [self.imageArray objectAtIndex:row];
+    UIImageView *imageView = [self.imageViewArray objectAtIndex:row];
     return [[UIImageView alloc] initWithImage:[imageView image]];
+//    return [self.imageViewArray objectAtIndex:row];
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    UIImageView *view = [self.imageArray objectAtIndex:self.selectedModel];
-    return view.frame.size.height;
+    return self.deviceFrame.height/RATIO;
 }
 
-//- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-//    
-//}
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    return self.deviceFrame.width*0.8;
+}
 
 #pragma mark - UIPickerViewDataSource
 
@@ -51,42 +56,131 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [self.imageArray count];
+    return [self.imageViewArray count];
 }
 
 #pragma mark - Initialization
 
+//- (void)tick:(CADisplayLink *)displayLink{
+//    self.counter = (self.counter+1)%16;
+//}
+//
+//- (void)startAnimation {
+//    if (self.displayLink == nil) {
+//        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
+//        [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//    }
+//}
+//
+//- (void)completeAnimation{
+//    [self.displayLink invalidate];
+//    self.displayLink = nil;
+//}
+
+- (UIImage *)scaleImage:(UIImage *)image withScale:(CGFloat)scaleSize {
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize, image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width*scaleSize, image.size.height*scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
+}
+
+- (UIImage *)clipImage:(UIImage *)image frame:(CGSize)frame {
+    CGRect rect = CGRectMake((image.size.width-frame.width)/2, (image.size.height-frame.height)/2, frame.width, frame.height);
+    CGImageRef sourceImageRef = [image CGImage];
+    CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
+    CGImageRelease(newImageRef);
+    return newImage;
+}
+
+//- (NSArray *)loadGIF:(NSString *)fileName picNum:(int)num {
+//    NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:num];
+//    for (int i = 1; i<=num; i++) {
+//        NSString *path = [NSString stringWithFormat:@"%@%d", fileName, i];
+//        UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:path ofType:@"png"]];
+//        assert(image);
+//        [imageArray addObject:[self scaleImage:image frame:self.deviceFrame]];
+//    }
+//    return imageArray;
+//}
+
 - (void)setupImageArray {
-    UIImage *image1 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_1" ofType:@"jpg"]];
-    UIImage *image2 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_target_2" ofType:@"jpg"]];
-    UIImage *image3 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
-    UIImage *image4 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
-    UIImage *image5 = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pointcloud-logo" ofType:@"png"]];
-    UIImageView *imageView1 = [[UIImageView alloc] initWithImage:image1];
-    UIImageView *imageView2 = [[UIImageView alloc] initWithImage:image2];
-    UIImageView *imageView3 = [[UIImageView alloc] initWithImage:image3];
-    UIImageView *imageView4 = [[UIImageView alloc] initWithImage:image3];
-    UIImageView *imageView5 = [[UIImageView alloc] initWithImage:image3];
-    imageView1.contentMode = UIViewContentModeScaleAspectFit;
-    imageView2.contentMode = UIViewContentModeScaleAspectFit;
-    imageView3.contentMode = UIViewContentModeScaleAspectFit;
-    imageView4.contentMode = UIViewContentModeScaleAspectFit;
-    imageView5.contentMode = UIViewContentModeScaleAspectFit;
-    self.imageArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, imageView5, nil];
+    UIImageView *imageView1 = [[UIImageView alloc] init];
+    UIImageView *imageView2 = [[UIImageView alloc] init];
+    UIImageView *imageView3 = [[UIImageView alloc] init];
+    UIImageView *imageView4 = [[UIImageView alloc] init];
+    UIImageView *imageView5 = [[UIImageView alloc] init];
+    
+//    NSArray *imageArray = [NSArray array];
+//    imageArray = [self loadGIF:@"bird" picNum:16];
+//    [imageView1 setAnimationImages:imageArray];
+//    [imageView1 setContentMode:UIViewContentModeScaleAspectFill];
+//    [imageView1 setAnimationDuration:1.0];
+//    [imageView1 startAnimating];
+//    imageArray = [self loadGIF:@"bird" picNum:16];
+//    [imageView2 setAnimationImages:imageArray];
+//    [imageView2 setContentMode:UIViewContentModeScaleAspectFill];
+//    [imageView2 setAnimationDuration:3.0];
+//    [imageView2 startAnimating];
+//    imageArray = [self loadGIF:@"bird" picNum:16];
+//    [imageView3 setAnimationImages:imageArray];
+//    [imageView3 setContentMode:UIViewContentModeScaleAspectFill];
+//    [imageView3 setAnimationDuration:1.0];
+//    [imageView3 startAnimating];
+//    imageArray = [self loadGIF:@"bird" picNum:16];
+//    [imageView4 setAnimationImages:imageArray];
+//    [imageView4 setContentMode:UIViewContentModeScaleAspectFill];
+//    [imageView4 setAnimationDuration:1.0];
+//    [imageView4 startAnimating];
+//    imageArray = [self loadGIF:@"bird" picNum:16];
+    UIImage *image = [[UIImage alloc] init];
+    CGFloat scale;
+    image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:@"Priest" ofType:@"png"]];
+    scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
+    imageView1.image = [self scaleImage:image withScale:scale];
+    [imageView1 setContentMode:UIViewContentModeScaleAspectFill];
+    
+    image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:@"Robot1" ofType:@"png"]];
+    scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
+    imageView2.image = [self scaleImage:image withScale:scale];
+    [imageView2 setContentMode:UIViewContentModeScaleAspectFit];
+    
+    image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:@"Robot2" ofType:@"png"]];
+    scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
+    imageView3.image = [self scaleImage:image withScale:scale];
+    [imageView3 setContentMode:UIViewContentModeScaleAspectFill];
+    
+    image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:@"Bird" ofType:@"png"]];
+    scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
+    imageView4.image = [self scaleImage:image withScale:scale];
+    [imageView4 setContentMode:UIViewContentModeScaleAspectFit];
+    
+    image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:@"Bird" ofType:@"png"]];
+    scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
+    imageView5.image = [self scaleImage:image withScale:scale];
+    [imageView5 setContentMode:UIViewContentModeCenter];
+    
+    self.imageViewArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, imageView5, nil];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     // geometry
+    NSLog(@"layout: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-//    UIImage *backgroudImage = [UIImage imageNamed:@"back"];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:backgroudImage];
-    
+    NSLog(@"load: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
+    self.deviceFrame = self.view.frame.size;
+    UIImage *backgroudImage = [UIImage imageNamed:@"back.png"];
+    CGFloat scale = MAX(self.deviceFrame.width/backgroudImage.size.width, self.deviceFrame.height/backgroudImage.size.height);
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[self clipImage:[self scaleImage:backgroudImage withScale:scale] frame:self.deviceFrame]];
     [self setupImageArray];
+//    self.counter = 0;
+//    [self startAnimation];
     self.selectedModel = 0;
 }
 
