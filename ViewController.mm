@@ -155,13 +155,13 @@
     scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
     imageView4.image = [self scaleImage:image withScale:scale];
     [imageView4 setContentMode:UIViewContentModeScaleAspectFit];
-    
+   /*
     image = [UIImage imageNamed:[[NSBundle mainBundle] pathForResource:@"Bird" ofType:@"png"]];
     scale = MIN(self.deviceFrame.width/image.size.width, self.deviceFrame.height/(RATIO*image.size.height));
     imageView5.image = [self scaleImage:image withScale:scale];
     [imageView5 setContentMode:UIViewContentModeCenter];
-    
-    self.imageViewArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, imageView5, nil];
+    */
+    self.imageViewArray = [[NSArray alloc] initWithObjects:imageView1, imageView2, imageView3, imageView4, nil];
 }
 
 - (void)viewWillLayoutSubviews {

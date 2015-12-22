@@ -50,6 +50,7 @@ void PointCloudApplication::setup_graphics() {
     
     logo_texture  = read_png_texture("pointcloud-logo.png");
     point_texture = read_png_texture("trackpoint.png");
+    back_texture = read_png_texture("back_icon.png");
     
     switch_to_ortho();
 }
@@ -139,6 +140,7 @@ void PointCloudApplication::draw_logo() {
     double scale_factor = (double)w/640;
     switch_to_ortho();
     draw_image(logo_texture, 10, h-(20+54)*scale_factor, 262*scale_factor, 54*scale_factor, 0, 0, 1, 1);
+    draw_image(back_texture, 10, 20, 150*scale_factor, 262*scale_factor, 0, 0, 1, 1);
 }
 
 

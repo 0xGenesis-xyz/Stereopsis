@@ -17,5 +17,8 @@
 -(void) addNormalX:(float)X Y:(float)Y Z:(float)Z;
 -(void) addNormalWithVector:(Vertex*) v;
 -(void) toUnit;
+-(double) length;
++(double) multiply:(Vertex*)v1 dot:(Vertex*)v2;
++(Vertex*) multiply:(Vertex*)v1 cross:(Vertex*)v2;
 
 @end

@@ -95,6 +95,7 @@ private:
     
     GLuint logo_texture;
     GLuint point_texture;
+    GLuint back_texture;
     GLuint video_texture;
     
     float video_vertices[8];

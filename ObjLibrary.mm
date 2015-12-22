@@ -11,19 +11,15 @@
 
 
 NSString* ObjLibrary::objnames[ObjLibrary::OBJNum] = {
-    @"skull"
     @"priest",
     @"robot1",
     @"robot2",
-    @"ghost",
     @"bird"
 };
 
 NSString*  ObjLibrary::textnames[ObjLibrary::OBJNum] = {
-    @"skull"
     @"priest",
     @"robot1",
     @"robot2",
-    @"ghost",
     @"bird"
 };

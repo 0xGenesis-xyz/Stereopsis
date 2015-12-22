@@ -12,7 +12,6 @@
 class ObjLibrary {
 public:
     enum {
-        SKULL,
         PRIEST,
         ROBOT1,
         ROBOT2,

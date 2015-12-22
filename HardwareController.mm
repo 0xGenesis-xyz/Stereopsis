@@ -135,7 +135,7 @@ using namespace std;
         pointcloud_context context = pointcloud_get_context();
         int w = context.viewport_width;
         int h = context.viewport_height;
-        if (pt.y < 112 && pt.x < w/3 )
+        if (pt.y < 100 && pt.x < w/3 )
         {
             [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
             /*

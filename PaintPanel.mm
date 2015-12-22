@@ -53,6 +53,7 @@ void PaintPanel::setup_objs() {
         if(objpath == nil) NSLog(@"Path to texture image not found");
         objs[i] = [[OBJ alloc] init];
         [objs[i] loadObj:objpath Texture:textpath];
+        //[objs[i] setVelocity:[[Vertex alloc]initWithX:0 Y:0.001 Z:0]];
     }
    // [objs[PRIEST] setUp];
 }
@@ -106,7 +107,7 @@ void PaintPanel::render_content(double time_since_last_frame) {
         floatTime += 0.5;
         if(floatTime == 60) floatTime = 0;
         glTranslatef(0, 0.15+0.1*cos(M_PI/30.0*floatTime), 0);
-        objs[selectedModel].drawObj;
+        [objs[selectedModel] drawObj];
         glPopMatrix();
         
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);

@@ -20,10 +20,15 @@
 @interface OBJ : NSObject
 
 @property GLuint vertexArray;
+@property(nonatomic,strong) Vertex* size;
+@property(nonatomic,strong) Vertex* velocity;
+@property(nonatomic,strong) Vertex* position;
+@property(nonatomic,strong) Vertex* direction;
 
 -(void) loadObj:(NSString*) filename Texture:(NSString*) textfilename;
 -(void) setUp;
 -(void) drawObj;
 -(void) dealloc;
+-(void) moveByVelocity;
 
 @end

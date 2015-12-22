@@ -31,6 +31,10 @@ float sqr(float k)
 @implementation OBJ
 
 @synthesize vertexArray;
+@synthesize size;
+@synthesize velocity;
+@synthesize position;
+@synthesize direction;
 
 -(id)init
 {
@@ -60,7 +64,14 @@ float sqr(float k)
     int v1,v2,v3,tv1,tv2,tv3,n1,n2,n3;
     float x,y,z;
     float a1,a2,a3,b1,b2,b3,la,lb;
+    Vertex *maxv,*minv,*gap;
+    maxv = [[Vertex alloc]initWithX:-100 Y:-100 Z:-100];
+    minv = [[Vertex alloc]initWithX:100 Y:100 Z:100];
     fp = fopen([filename UTF8String],"r");
+    size = [[Vertex alloc] initWithX:1 Y:1 Z:1];
+    velocity = [[Vertex alloc]initWithX:0 Y:0 Z:0];
+    position = [[Vertex alloc]initWithX:0 Y:0 Z:0];
+    direction = [[Vertex alloc]initWithX:0 Y:1 Z:0];
     if(fp == NULL)
     {
         NSLog(@"fp = NULL");
@@ -75,6 +86,12 @@ float sqr(float k)
             fscanf(fp, "%f%f%f",&x,&y,&z);
             v = [[Vertex alloc] initWithX:x Y:y Z:z];
             [vertices addObject:v];
+            if( x > maxv.x ) maxv.x = x;
+            if( y > maxv.y ) maxv.y = y;
+            if( z > maxv.z ) maxv.z = z;
+            if( x < minv.x ) minv.x = x;
+            if( y < minv.y ) minv.y = y;
+            if( z < minv.z ) minv.z = z;
         } else if(strcmp(input,"vt") == 0)
         {
             fscanf(fp, "%f%f",&x,&y);
@@ -99,6 +116,13 @@ float sqr(float k)
             [normals addObject:v];
         }
     }
+ /*   gap = [[Vertex alloc] initWithX:maxv.x-minv.x Y:maxv.y-minv.y Z:maxv.z-minv.z];
+    for(Vertex* v in vertices)
+    {
+        v.x = (v.x-minv.x)/gap.x*size.x-0.5;
+        v.y = (v.y-minv.y)/gap.y*size.y-0.5;
+        v.z = (v.z-minv.z)/gap.z*size.z-0.5;
+    }*/
     buffer_stride = 8*sizeof(GLfloat);
     buffer_size = faces.count*3*buffer_stride;
     buffer = (GLfloat*)malloc(buffer_size);
@@ -135,7 +159,6 @@ float sqr(float k)
             buffer[8*3*index+i*8+7] = t[i].y;
         }
     }
-    
     texture = [[Texture alloc]init];
     GLuint textID;
     glGenTextures(1, &textID);
@@ -167,13 +190,34 @@ float sqr(float k)
   */
 }
 
+-(void) setDirection:(Vertex *)direction
+{
+    self.direction = direction;
+    [self.direction toUnit];
+}
+
+-(void) moveByVelocity
+{
+    self.position.x+=self.velocity.x;
+    self.position.y+=self.velocity.y;
+    self.position.z+=self.velocity.z;
+    NSLog(@"x = %lf\ty = %lf\tz = %lf\n",self.position.x,self.position.y,self.position.z);
+}
+
 -(void) drawObj
 {
+    glPushMatrix();
+   /* Vertex* original = [[Vertex alloc] initWithX:0 Y:1 Z:0];
+    Vertex* vec = [Vertex multiply:original  cross:direction];
+    double angle =acos([Vertex multiply:original dot:direction]);
+    glRotatef(angle, vec.x, vec.y, vec.z);
+    glTranslatef(position.x, position.y, position.z);*/
     [texture UseTexture];
     glVertexPointer(3, GL_FLOAT, buffer_stride, buffer+vertex_off);
     glNormalPointer(GL_FLOAT, buffer_stride, buffer+normal_off);
     glTexCoordPointer(2, GL_FLOAT, buffer_stride, buffer+text_off);
     glDrawArrays(GL_TRIANGLES, 0, vertexNum);
+    glPopMatrix();
 }
 
 @end
