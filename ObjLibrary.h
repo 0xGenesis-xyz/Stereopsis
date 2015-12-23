@@ -15,7 +15,6 @@ public:
         PRIEST,
         ROBOT1,
         ROBOT2,
-        GHOST,
         BIRD,
         OBJNum
     };
