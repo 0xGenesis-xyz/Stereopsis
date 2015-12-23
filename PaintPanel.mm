@@ -72,7 +72,7 @@ void PaintPanel::render_content(double time_since_last_frame) {
     //    glEnable(GL_LIGHTING);
      //   glEnable(GL_LIGHT0);
         static const GLfloat LightWhite[] = {1,1,1,1};
-        static const float LightPos[4] = {0, 1.3, 0,1.0f};
+        static const float LightPos[4] = {0, 0.65, 0,1.0f};
         static const float Direction[3] = {0,-1,0};
         glLightfv(GL_LIGHT1, GL_POSITION, LightPos);
         glLightfv(GL_LIGHT1, GL_DIFFUSE, LightWhite);
@@ -106,7 +106,7 @@ void PaintPanel::render_content(double time_since_last_frame) {
         
         floatTime += 0.5;
         if(floatTime == 60) floatTime = 0;
-        glTranslatef(0, 0.15+0.1*cos(M_PI/30.0*floatTime), 0);
+        glTranslatef(0, 0.05+0.04*cos(M_PI/30.0*floatTime), 0);
         [objs[selectedModel] drawObj];
         glPopMatrix();
         

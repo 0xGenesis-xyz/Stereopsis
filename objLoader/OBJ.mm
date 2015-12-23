@@ -149,9 +149,9 @@ float sqr(float k)
         t[2] = textVertices[textface.v3];
         for(int i=0;i<3;i++)
         {
-            buffer[8*3*index+i*8+0] = v[i].x/5.0;
-            buffer[8*3*index+i*8+1] = v[i].y/5.0;
-            buffer[8*3*index+i*8+2] = v[i].z/5.0;
+            buffer[8*3*index+i*8+0] = v[i].x/10.0;
+            buffer[8*3*index+i*8+1] = v[i].y/10.0;
+            buffer[8*3*index+i*8+2] = v[i].z/10.0;
             buffer[8*3*index+i*8+3] = n[i].x;
             buffer[8*3*index+i*8+4] = n[i].y;
             buffer[8*3*index+i*8+5] = n[i].z;
